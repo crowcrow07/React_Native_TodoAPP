@@ -20,7 +20,7 @@ export default function App() {
   function addListHandler() {
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
-      enteredListText,
+      { text: enteredListText, key: Date.now() },
     ]);
   }
 
@@ -35,15 +35,16 @@ export default function App() {
         <Button title="Add List" onPress={addListHandler} />
       </View>
       <View style={styles.listContainer}>
-        <FlatList>
-          {courseGoals.map((text, idx) => {
+        <FlatList
+          data={courseGoals}
+          renderItem={(itemData) => {
             return (
-              <View style={styles.listItem} key={idx}>
-                <Text style={{ color: "white" }}>{text}</Text>
+              <View style={styles.listItem}>
+                <Text style={{ color: "white" }}>{itemData.item.text}</Text>
               </View>
             );
-          })}
-        </FlatList>
+          }}
+        />
       </View>
     </View>
   );
