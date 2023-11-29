@@ -1,20 +1,83 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from "react";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  ScrollView,
+  FlatList,
+} from "react-native";
 
 export default function App() {
+  const [enteredListText, setEnteredListText] = useState("");
+  const [courseGoals, setCourseGoals] = useState([]);
+
+  function listInputHandler(enteredText) {
+    setEnteredListText(enteredText);
+  }
+
+  function addListHandler() {
+    setCourseGoals((currentCourseGoals) => [
+      ...currentCourseGoals,
+      enteredListText,
+    ]);
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="한글도 괜찮죠?"
+          onChangeText={listInputHandler}
+        />
+        <Button title="Add List" onPress={addListHandler} />
+      </View>
+      <View style={styles.listContainer}>
+        <FlatList>
+          {courseGoals.map((text, idx) => {
+            return (
+              <View style={styles.listItem} key={idx}>
+                <Text style={{ color: "white" }}>{text}</Text>
+              </View>
+            );
+          })}
+        </FlatList>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  appContainer: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 50,
+    paddingHorizontal: 16,
+  },
+  inputContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: "#cccccc",
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: "#cccccc",
+    width: "70%",
+    marginRight: 8,
+    padding: 8,
+  },
+  listContainer: {
+    flex: 5,
+  },
+  listItem: {
+    margin: 8,
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: "#5e0acc",
   },
 });
