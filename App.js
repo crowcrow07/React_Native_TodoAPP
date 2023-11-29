@@ -1,13 +1,7 @@
 import { useState } from "react";
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  ScrollView,
-  FlatList,
-} from "react-native";
+import { Button, StyleSheet, TextInput, View, FlatList } from "react-native";
+
+import ListItem from "./components/ListItem";
 
 export default function App() {
   const [enteredListText, setEnteredListText] = useState("");
@@ -38,11 +32,7 @@ export default function App() {
         <FlatList
           data={courseGoals}
           renderItem={(itemData) => {
-            return (
-              <View style={styles.listItem}>
-                <Text style={{ color: "white" }}>{itemData.item.text}</Text>
-              </View>
-            );
+            return <ListItem text={itemData.item.text} />;
           }}
         />
       </View>
