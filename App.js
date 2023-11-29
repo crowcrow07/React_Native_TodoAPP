@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, StyleSheet, TextInput, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 
 import ListItem from "./components/ListItem";
 import ListInput from "./components/ListInput";
