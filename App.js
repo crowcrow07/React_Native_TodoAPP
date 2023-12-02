@@ -11,8 +11,14 @@ export default function App() {
     if (!enteredListText.trim()) return;
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
-      { text: enteredListText, key: Date.now() },
+      { text: enteredListText, id: Math.random().toString() },
     ]);
+  }
+
+  function deleteGoalHandler(id) {
+    setCourseGoals((currentCourseGoals) => {
+      return currentCourseGoals.filter((item) => item.id !== id);
+    });
   }
 
   return (
@@ -22,7 +28,13 @@ export default function App() {
         <FlatList
           data={courseGoals}
           renderItem={(itemData) => {
-            return <ListItem text={itemData.item.text} />;
+            return (
+              <ListItem
+                id={itemData.item.id}
+                text={itemData.item.text}
+                onDeleteItem={deleteGoalHandler}
+              />
+            );
           }}
         />
       </View>
