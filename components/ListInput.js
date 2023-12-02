@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, TextInput, Button, StyleSheet } from "react-native";
 
-export default function ListInput({ addListHandler }) {
+export default function ListInput({ onAddList }) {
   const [enteredListText, setEnteredListText] = useState("");
 
   function listInputHandler(enteredText) {
@@ -19,7 +19,7 @@ export default function ListInput({ addListHandler }) {
       <Button
         title="Add List"
         onPress={() => {
-          addListHandler(enteredListText);
+          onAddList(enteredListText);
           setEnteredListText("");
         }}
       />

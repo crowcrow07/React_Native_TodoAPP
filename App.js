@@ -17,7 +17,7 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <ListInput addListHandler={addListHandler} />
+      <ListInput onAddList={addListHandler} />
       <View style={styles.listContainer}>
         <FlatList
           data={courseGoals}
