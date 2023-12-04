@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import { View, TextInput, Button, StyleSheet, Modal } from "react-native";
 
-export default function ListInput({ onAddList }) {
+export default function ListInput({ onAddList, visible }) {
   const [enteredListText, setEnteredListText] = useState("");
 
   function listInputHandler(enteredText) {
@@ -9,21 +9,23 @@ export default function ListInput({ onAddList }) {
   }
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        value={enteredListText}
-        style={styles.textInput}
-        placeholder="한글도 괜찮죠?"
-        onChangeText={listInputHandler}
-      />
-      <Button
-        title="Add List"
-        onPress={() => {
-          onAddList(enteredListText);
-          setEnteredListText("");
-        }}
-      />
-    </View>
+    <Modal visible={visible} animationType="slide">
+      <View style={styles.inputContainer}>
+        <TextInput
+          value={enteredListText}
+          style={styles.textInput}
+          placeholder="한글도 괜찮죠?"
+          onChangeText={listInputHandler}
+        />
+        <Button
+          title="Add List"
+          onPress={() => {
+            onAddList(enteredListText);
+            setEnteredListText("");
+          }}
+        />
+      </View>
+    </Modal>
   );
 }
 

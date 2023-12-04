@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, Button } from "react-native";
 
 import ListItem from "./components/ListItem";
 import ListInput from "./components/ListInput";
 
 export default function App() {
+  const [modalIsVisible, setModalIsVisiable] = useState(false);
   const [courseGoals, setCourseGoals] = useState([]);
+
+  function startAddListHandler() {
+    setModalIsVisiable(true);
+  }
 
   function addListHandler(enteredListText) {
     if (!enteredListText.trim()) return;
@@ -23,7 +28,12 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <ListInput onAddList={addListHandler} />
+      <Button
+        title="Add New List"
+        color="#5e0acc"
+        onPress={startAddListHandler}
+      />
+      <ListInput onAddList={addListHandler} visible={modalIsVisible} />
       <View style={styles.listContainer}>
         <FlatList
           data={courseGoals}
