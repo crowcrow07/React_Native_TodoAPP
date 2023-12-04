@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, View, FlatList, Button } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 import ListItem from "./components/ListItem";
 import ListInput from "./components/ListInput";
@@ -12,12 +13,17 @@ export default function App() {
     setModalIsVisiable(true);
   }
 
+  function closeModalHandler() {
+    setModalIsVisiable(false);
+  }
+
   function addListHandler(enteredListText) {
     if (!enteredListText.trim()) return;
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
       { text: enteredListText, id: Math.random().toString() },
     ]);
+    setModalIsVisiable(false);
   }
 
   function deleteGoalHandler(id) {
@@ -27,28 +33,35 @@ export default function App() {
   }
 
   return (
-    <View style={styles.appContainer}>
-      <Button
-        title="Add New List"
-        color="#5e0acc"
-        onPress={startAddListHandler}
-      />
-      <ListInput onAddList={addListHandler} visible={modalIsVisible} />
-      <View style={styles.listContainer}>
-        <FlatList
-          data={courseGoals}
-          renderItem={(itemData) => {
-            return (
-              <ListItem
-                id={itemData.item.id}
-                text={itemData.item.text}
-                onDeleteItem={deleteGoalHandler}
-              />
-            );
-          }}
+    <>
+      <StatusBar style="light" />
+      <View style={styles.appContainer}>
+        <Button
+          title="Add New List"
+          color="#a065ec"
+          onPress={startAddListHandler}
         />
+        <ListInput
+          onAddList={addListHandler}
+          visible={modalIsVisible}
+          onClose={closeModalHandler}
+        />
+        <View style={styles.listContainer}>
+          <FlatList
+            data={courseGoals}
+            renderItem={(itemData) => {
+              return (
+                <ListItem
+                  id={itemData.item.id}
+                  text={itemData.item.text}
+                  onDeleteItem={deleteGoalHandler}
+                />
+              );
+            }}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
